@@ -5,3 +5,17 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+/* Feed CSS */
+.feed_desc {
+	background-color: #2D3F70;
+	color: #ffffff;
+}
+.feed_desc h1 {
+	font-size: 22px;
+	line-height: 26px;
+}
+.feed_desc p {
+	font-size: 14px;
+	line-height: 21px;
+}
