@@ -15,6 +15,7 @@
     <link href="style/css/bootstrap.css" rel="stylesheet">
     <link href="style/css/custom.css" rel="stylesheet">
 	<link href="style/css/videoOverlay.css" rel="stylesheet">
+			<link type="text/css" rel="stylesheet" href="release/featherlight.min.css" />
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -29,18 +30,35 @@
   </head>
 
   <body>
-
+	<div id="light_box_bk"></div>				
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
-        
+	  
+        <div id="light_box">
+		<canvas id="sky_canv"></canvas>
+		<div class="col-md-6">
+							<div class="input-group">
+							  <span class="input-group-addon" id="basic-addon1">Top text</span>
+							  <input type="text" class="form-control" id="top_text" placeholder="I don't always create memes" >
+							</div>
+							<br>
+							<div class="input-group">
+							  <span class="input-group-addon" id="basic-addon1">Bottom text</span>
+							  <input type="text" class="form-control" id="bottom_text" placeholder="but when I do I use MemeXtream" >
+							</div>
+							<br>
+							<button type="button" id="close" class="btn btn-default pull-left" onclick="hideCanvas()"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Cancel</button>
+							<button type="button" id="preview" class="btn btn-default pull-right"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Submit</button>
+						</div>
+		</div>
 <div id="navbar"> 
           <ul class="nav navbar-nav" id="player">
 			<li> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></li>
             <li>  </li>
 			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-backward" id="rewind" onclick="rewindVid()" aria-hidden="true"></span></button></li>
-			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-play" id="play" onclick="playVid()" aria-hidden="true"></span></button></li>
+			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pause" id="play" onclick="playVid()" aria-hidden="true"></span></button></li>
 			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-forward" id="fastforward" onclick="fastforwardVid()" aria-hidden="true"></span></button></li>
-			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok-circle" id="go" aria-hidden="true"></span></button></li>
+			<li><button type="button" class="btn btn-default" href="#" data-featherlight="#sky_canv" onclick="loadCanvas()"><span class="glyphicon glyphicon-ok-circle" id="go" aria-hidden="true"></span></button></li>
           </ul>
         
         </div>
@@ -53,8 +71,7 @@
 		
 			
 			
-<video id="sky_vid" src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" muted controls></video>
-<canvas id="sky_canv"></canvas>
+<video id="sky_vid" src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" muted autoplay></video>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <!-- Bootstrap core JavaScript    ================================================== -->
@@ -80,16 +97,66 @@
 		$('#sky_vid')[0].currentTime=now-0.1;
 	}
 	
+	function loadCanvas() {
+		$('#light_box').show(200);
+		$('#light_box_bk').show(500);
+	}
+	
+	function hideCanvas() {
+		$('#light_box').hide(500);
+		$('#light_box_bk').hide(200);
+	}
+	
 var canvas = $('#sky_canv')[0];
 var ctx    = canvas.getContext('2d');
 var video  = $('#sky_vid')[0];
+
+/*function preview() {
+var canvas = $('#sky_canv')[0];
+var context    = canvas.getContext('2d');
+var video  = $('#sky_vid')[0];
+
+var top_text = $('#top_text').val();
+context.font = 'bold 10pt Calibri';
+  context.fillText('Hello World!', 150, 100);
+  context.font = 'italic 40pt Times Roman';
+  context.fillStyle = 'blue';
+  context.fillText('Hello World!', 200, 150);
+  context.font = '60pt Calibri';
+  context.lineWidth = 4;
+  context.strokeStyle = 'blue';
+  context.strokeText('Hello World!', 70, 70);
+return false;
+}*/
+
+$(function() {
+var canvas = $('#sky_canv')[0];
+var ctx    = canvas.getContext('2d');
+var video  = $('#sky_vid')[0];
+	$('#top_text').keyup(function() {
+		ctx.font="30px Arial";
+		ctx.fillText($(this).val(), 200, 50);
+	});
+	
+		$('#bottom_text').keyup(function() {
+		ctx.font="30px Arial";
+		ctx.fillText($(this).val(), 200, 350);
+	});
+
+	$('#preview').click(function() {
+		ctx.font="30px Arial";
+		ctx.fillText($('#text_top').val(), 200, 100);
+		ctx.fillText($('#text_bottom').val(), 800, 100);
+	});
+});
+
 
 video.addEventListener('play', function () {
     var $this = this; //cache
 	$('#sky_canv').attr('width', $('#sky_vid').get(0).videoWidth);
 	$('#sky_canv').attr('height', $('#sky_vid').get(0).videoHeight);
     (function loop() {
-        if (!$this.ended) {
+        if (!$this.ended && !$this.paused) {
             ctx.drawImage($this, 0, 0);
             setTimeout(loop, 1000 / 30); // drawing at 30fps
         }
@@ -98,5 +165,16 @@ video.addEventListener('play', function () {
 }, 0);
 	
 	</script>
+	<!--<script src="release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//stats.g.doubleclick.net/dc.js','ga');
+
+			ga('create', 'UA-5342062-6', 'noelboss.github.io');
+			ga('send', 'pageview');
+		</script>-->
   </body>
 </html>
