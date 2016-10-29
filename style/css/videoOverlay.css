@@ -1,0 +1,45 @@
+		.content {
+  position: relative;
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.content:before {
+  content: '';
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.content button {
+position:relative;
+}
+
+video#player { 
+  display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover; 
+	
+}
+
+.btn {
+margin: 7px;
+float:left;
+}
+
