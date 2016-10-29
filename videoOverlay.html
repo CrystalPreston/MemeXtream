@@ -37,10 +37,10 @@
           <ul class="nav navbar-nav" id="player">
 			<li> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></li>
             <li>  </li>
-			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></button></li>
-			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button></li>
-			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></button></li>
-			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></button></li>
+			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-backward" id="rewind" onclick="rewindVid()" aria-hidden="true"></span></button></li>
+			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-play" id="play" onclick="playVid()" aria-hidden="true"></span></button></li>
+			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-forward" id="fastforward" onclick="fastforwardVid()" aria-hidden="true"></span></button></li>
+			<li>  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok-circle" id="go" aria-hidden="true"></span></button></li>
           </ul>
         
         </div>
@@ -53,16 +53,50 @@
 		
 			
 			
-<video id="player" src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" autoplay loop muted></video>
+<video id="sky_vid" src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" muted controls></video>
+<canvas id="sky_canv"></canvas>
 
-
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <!-- Bootstrap core JavaScript    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <!--<script src="js/javascript.js"></script>-->
+	<script>
+	function playVid() {
+		var video = $('#sky_vid');
+		video[0].paused ? video[0].play() : video[0].pause();
+		$('#play').toggleClass('glyphicon-pause glyphicon-play');
+	}
+	
+	function fastforwardVid() {
+		var now = $('#sky_vid')[0].currentTime;
+		$('#sky_vid')[0].currentTime=now+0.1;
+	}
+	
+	function rewindVid() {
+		var now = $('#sky_vid')[0].currentTime;
+		$('#sky_vid')[0].currentTime=now-0.1;
+	}
+	
+var canvas = $('#sky_canv')[0];
+var ctx    = canvas.getContext('2d');
+var video  = $('#sky_vid')[0];
+
+video.addEventListener('play', function () {
+    var $this = this; //cache
+	$('#sky_canv').attr('width', $('#sky_vid').get(0).videoWidth);
+	$('#sky_canv').attr('height', $('#sky_vid').get(0).videoHeight);
+    (function loop() {
+        if (!$this.ended) {
+            ctx.drawImage($this, 0, 0);
+            setTimeout(loop, 1000 / 30); // drawing at 30fps
+        }
+    })();
+	
+}, 0);
+	
+	</script>
   </body>
 </html>
