@@ -35,6 +35,7 @@ video#player, #sky_vid {
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
     background-size: cover; 
+margin-top: -15px;
 	
 }
 
@@ -103,22 +104,30 @@ float:left;
 				opacity: 0.5;
 				display: none;
 			}
+			.light-box {
+				margin: 15px 0 !important;
+			}
 			
 			#light_box {
 				z-index: 2;
 				background-color: #fff;
 				width: 80%;
-				position: absolute;
-				left: 5%;
+				margin: 0 auto;
+				position: relative;
+				max-width: 700px;
 				top: 20px;
-				height: 99%;
-				min-height: 700px;
 				text-align: center;
 				display: none;				
 			}
 			
-			#sky_canvas, form {
+			#sky_canv, form {
 				position: relative;
 			}
+
+#sky_canv {
+margin-top: 20px;
+max-height: 300px;
+max-width: 800px;
+}
 			
 			

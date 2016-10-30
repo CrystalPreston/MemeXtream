@@ -32,9 +32,9 @@ body {
 .meme_feed_items::first-child {
 	margin-top: 0;
 }
-.main_feed_item:hover {
+div.meme_feed_item:hover {
 	cursor: pointer;
-	background-color: #ff0000;
+	background-color: #cdcfd4;
 }
 .meme_feed_icon img {
 	border: transparent;
@@ -62,10 +62,30 @@ body {
 	max-width: 570px;
 }
 .btn_holder {
-	padding: 20px 8px;
+	padding: 20px 0px;
 }
 .main_footer {
 	background-color: #0F111E;
 	color: #424242;
 	padding: 20px 0px;
+}
+.btn-facebook {
+	color: #ffffff;
+	background-color: #3B5998;
+	border-color: #3B5998;
+}
+.btn-twitter {
+	color: #ffffff;
+	background-color: #1DA1F2;
+	border-color: #1DA1F2;
+}
+.btn-pintrest {
+	color: #ffffff;
+	background-color: #BD081C;
+	border-color: #BD081C;
+}
+.btn-instagram {
+	color: #ffffff;
+	background-color: #3897F0;
+	border-color: #3897F0;
 }
